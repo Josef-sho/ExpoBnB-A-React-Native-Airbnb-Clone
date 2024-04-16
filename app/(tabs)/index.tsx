@@ -1,12 +1,21 @@
 import { View, Text } from 'react-native'
 import React from 'react'
+import { Link, Tabs } from 'expo-router'
 
-const Page = () => {
+const Layout = () => {
   return (
     <View>
-      <Text>Page</Text>
+      <Link href={'/(modals)/booking'} >
+        Booking 
+      </Link>
+      <Link href={'/(modals)/login'} >
+        Login 
+      </Link>
+      <Link href={'/listings/1395'} >
+        Listings 
+      </Link>
     </View>
   )
 }
 
-export default Page
+export default Layout
