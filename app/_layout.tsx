@@ -7,7 +7,6 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { TouchableOpacity } from 'react-native';
 
-// import { useColorScheme } from '@/components/useColorScheme';
 
 
 
