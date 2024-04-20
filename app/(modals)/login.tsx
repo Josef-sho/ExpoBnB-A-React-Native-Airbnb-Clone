@@ -10,9 +10,21 @@ import { useWarmUpBrowser } from "../hooks/usewarmupbrowser";
 import { defaultStyles } from "@/constants/styles";
 import Colors from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
+import { useAuth, useOAuth } from "@clerk/clerk-expo";
+
+enum strategy{
+  Google = 'oauth_google',
+  Facebook = 'oauth_facebook',
+  Apple = 'oauth_apple',
+}
 
 const login = () => {
-  useWarmUpBrowser;
+  const { startOAuthFlow:googleAuth } = useOAuth({ strategy: 'oauth_google' });
+  const { startOAuthFlow:facebookAuth } = useOAuth({ strategy: 'oauth_facebook' });
+  const { startOAuthFlow:appleAuth } = useOAuth({ strategy: 'oauth_apple' });
+
+  const onSelectAuth = async(strategy: strategy) => {}
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -45,24 +57,24 @@ const login = () => {
         />
         
       </View>
-      <view>
+      <View style={{gap:20}}>
             <TouchableOpacity style={[styles.btnOutline]}>
             <Ionicons name="call-outline" style={defaultStyles.btnIcon} size={24} />
             <Text style={styles.btnOutlineText}> Continue with phone</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.btnOutline]}>
-            <Ionicons name="logo-apple" style={defaultStyles.btnIcon} size={24} />
-            <Text style={styles.btnOutlineText}> Continue with apple</Text>
+            <TouchableOpacity style={[styles.btnOutline]}  onPress={() => onSelectAuth(strategy.Apple)}>
+              <Ionicons name="logo-apple" style={defaultStyles.btnIcon} size={24}/>
+              <Text style={styles.btnOutlineText}> Continue with apple</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.btnOutline]}>
+            <TouchableOpacity style={[styles.btnOutline]} onPress={() => onSelectAuth(strategy.Google)}>
             <Ionicons name="logo-google" style={defaultStyles.btnIcon} size={24} />
             <Text style={styles.btnOutlineText}> Continue with google</Text>
             </TouchableOpacity>  
-            <TouchableOpacity style={[styles.btnOutline]}>
+            <TouchableOpacity style={[styles.btnOutline]} onPress={() => onSelectAuth(strategy.Facebook)}>
             <Ionicons name="logo-facebook" style={defaultStyles.btnIcon} size={24} />
             <Text style={styles.btnOutlineText}> Continue with facebook</Text>
             </TouchableOpacity>
-      </view>
+      </View>
     </View>
   );
 };
@@ -95,9 +107,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   btnOutlineText: {
-    color: '#000',
+    // color: '#000',
     fontSize: 16,
-    fontFamily: 'mon-sb',
+    fontFamily: 'SpaceMono',
   },
 });
 export default login;
