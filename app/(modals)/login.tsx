@@ -23,7 +23,13 @@ const login = () => {
   const { startOAuthFlow:facebookAuth } = useOAuth({ strategy: 'oauth_facebook' });
   const { startOAuthFlow:appleAuth } = useOAuth({ strategy: 'oauth_apple' });
 
-  const onSelectAuth = async(strategy: strategy) => {}
+  const onSelectAuth = async(strategy: strategy) => {
+    const selectedAuth = {
+      [strategy.Google]: googleAuth,
+      [strategy.Facebook]: facebookAuth,
+      [strategy.Apple]: appleAuth,
+    }[strategy]; 
+  }
 
   return (
     <View style={styles.container}>
