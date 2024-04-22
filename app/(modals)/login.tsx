@@ -11,6 +11,8 @@ import { defaultStyles } from "@/constants/styles";
 import Colors from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { useAuth, useOAuth } from "@clerk/clerk-expo";
+import { useRouter } from "expo-router";
+
 
 enum Strategy {
   Google = "Google",
@@ -19,6 +21,7 @@ enum Strategy {
 }
 
 const login = () => {
+  const router = useRouter()
   const { startOAuthFlow: googleAuth } = useOAuth({ strategy: "oauth_google" });
   const { startOAuthFlow: facebookAuth } = useOAuth({
     strategy: "oauth_facebook",
@@ -34,8 +37,14 @@ const login = () => {
 
     try {
       const { createdSessionId, setActive } = await selectedAuth();
+      console.log( 'it works ',createdSessionId) 
+
+      if(createdSessionId){
+        setActive!({ session: createdSessionId });
+        router.back()
+      }
     } catch (error) {
-      console.log(error);
+      console.log('OAutherror:',error);
     }
   };
 
@@ -83,14 +92,14 @@ const login = () => {
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.btnOutline]}
-          onPress={() => onSelectAuth(strategy.Apple)}
+          onPress={() => onSelectAuth(Strategy.Apple)}
         >
           <Ionicons name="logo-apple" style={defaultStyles.btnIcon} size={24} />
           <Text style={styles.btnOutlineText}> Continue with apple</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.btnOutline]}
-          onPress={() => onSelectAuth(strategy.Google)}
+          onPress={() => onSelectAuth(Strategy.Google)}
         >
           <Ionicons
             name="logo-google"
@@ -101,7 +110,7 @@ const login = () => {
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.btnOutline]}
-          onPress={() => onSelectAuth(strategy.Facebook)}
+          onPress={() => onSelectAuth(Strategy.Facebook)}
         >
           <Ionicons
             name="logo-facebook"
