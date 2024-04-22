@@ -12,24 +12,32 @@ import Colors from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { useAuth, useOAuth } from "@clerk/clerk-expo";
 
-enum strategy{
-  Google = 'oauth_google',
-  Facebook = 'oauth_facebook',
-  Apple = 'oauth_apple',
+enum Strategy {
+  Google = "Google",
+  Facebook = "Facebook",
+  Apple = "Apple",
 }
 
 const login = () => {
-  const { startOAuthFlow:googleAuth } = useOAuth({ strategy: 'oauth_google' });
-  const { startOAuthFlow:facebookAuth } = useOAuth({ strategy: 'oauth_facebook' });
-  const { startOAuthFlow:appleAuth } = useOAuth({ strategy: 'oauth_apple' });
+  const { startOAuthFlow: googleAuth } = useOAuth({ strategy: "oauth_google" });
+  const { startOAuthFlow: facebookAuth } = useOAuth({
+    strategy: "oauth_facebook",
+  });
+  const { startOAuthFlow: appleAuth } = useOAuth({ strategy: "oauth_apple" });
 
-  const onSelectAuth = async(strategy: strategy) => {
+  const onSelectAuth = async (strategy: Strategy) => {
     const selectedAuth = {
-      [strategy.Google]: googleAuth,
-      [strategy.Facebook]: facebookAuth,
-      [strategy.Apple]: appleAuth,
-    }[strategy]; 
-  }
+      [Strategy.Google]: googleAuth,
+      [Strategy.Facebook]: facebookAuth,
+      [Strategy.Apple]: appleAuth,
+    }[strategy];
+
+    try {
+      const { createdSessionId, setActive } = await selectedAuth();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -46,40 +54,62 @@ const login = () => {
       /> */}
       <TouchableOpacity style={[defaultStyles.btn]}>
         <Text style={defaultStyles.btnText}> Continue </Text>
-      </TouchableOpacity> 
+      </TouchableOpacity>
       <View style={styles.seperatorview}>
-        <View 
-        style={{ 
-        flex:1,
-        borderBottomWidth: StyleSheet.hairlineWidth, 
-        borderBottomColor: "black" }} 
+        <View
+          style={{
+            flex: 1,
+            borderBottomWidth: StyleSheet.hairlineWidth,
+            borderBottomColor: "black",
+          }}
         />
         <Text style={styles.seperator}>Or</Text>
-        <View 
-        style={{ 
-        flex:1,
-        borderBottomWidth: StyleSheet.hairlineWidth, 
-        borderBottomColor: "black" }} 
+        <View
+          style={{
+            flex: 1,
+            borderBottomWidth: StyleSheet.hairlineWidth,
+            borderBottomColor: "black",
+          }}
         />
-        
       </View>
-      <View style={{gap:20}}>
-            <TouchableOpacity style={[styles.btnOutline]}>
-            <Ionicons name="call-outline" style={defaultStyles.btnIcon} size={24} />
-            <Text style={styles.btnOutlineText}> Continue with phone</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.btnOutline]}  onPress={() => onSelectAuth(strategy.Apple)}>
-              <Ionicons name="logo-apple" style={defaultStyles.btnIcon} size={24}/>
-              <Text style={styles.btnOutlineText}> Continue with apple</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.btnOutline]} onPress={() => onSelectAuth(strategy.Google)}>
-            <Ionicons name="logo-google" style={defaultStyles.btnIcon} size={24} />
-            <Text style={styles.btnOutlineText}> Continue with google</Text>
-            </TouchableOpacity>  
-            <TouchableOpacity style={[styles.btnOutline]} onPress={() => onSelectAuth(strategy.Facebook)}>
-            <Ionicons name="logo-facebook" style={defaultStyles.btnIcon} size={24} />
-            <Text style={styles.btnOutlineText}> Continue with facebook</Text>
-            </TouchableOpacity>
+      <View style={{ gap: 20 }}>
+        <TouchableOpacity style={[styles.btnOutline]}>
+          <Ionicons
+            name="call-outline"
+            style={defaultStyles.btnIcon}
+            size={24}
+          />
+          <Text style={styles.btnOutlineText}> Continue with phone</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.btnOutline]}
+          onPress={() => onSelectAuth(strategy.Apple)}
+        >
+          <Ionicons name="logo-apple" style={defaultStyles.btnIcon} size={24} />
+          <Text style={styles.btnOutlineText}> Continue with apple</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.btnOutline]}
+          onPress={() => onSelectAuth(strategy.Google)}
+        >
+          <Ionicons
+            name="logo-google"
+            style={defaultStyles.btnIcon}
+            size={24}
+          />
+          <Text style={styles.btnOutlineText}> Continue with google</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.btnOutline]}
+          onPress={() => onSelectAuth(strategy.Facebook)}
+        >
+          <Ionicons
+            name="logo-facebook"
+            style={defaultStyles.btnIcon}
+            size={24}
+          />
+          <Text style={styles.btnOutlineText}> Continue with facebook</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -91,31 +121,31 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 26,
   },
-  seperatorview:{
-    flexDirection: 'row',
+  seperatorview: {
+    flexDirection: "row",
     gap: 10,
-    alignItems: 'center',
+    alignItems: "center",
     marginVertical: 30,
   },
   seperator: {
-    fontFamily: 'SpaceMono',
+    fontFamily: "SpaceMono",
     color: Colors.grey,
   },
   btnOutline: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderWidth: 1,
     borderColor: Colors.grey,
     height: 50,
     borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
     paddingHorizontal: 10,
   },
   btnOutlineText: {
     // color: '#000',
     fontSize: 16,
-    fontFamily: 'SpaceMono',
+    fontFamily: "SpaceMono",
   },
 });
 export default login;
