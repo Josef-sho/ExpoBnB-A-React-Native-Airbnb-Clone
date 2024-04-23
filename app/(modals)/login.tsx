@@ -1,3 +1,4 @@
+// Importing necessary modules and hooks
 import {
   View,
   Text,
@@ -13,22 +14,28 @@ import { Ionicons } from "@expo/vector-icons";
 import { useAuth, useOAuth } from "@clerk/clerk-expo";
 import { useRouter } from "expo-router";
 
-
+// Enum for OAuth strategies
 enum Strategy {
   Google = "Google",
   Facebook = "Facebook",
   Apple = "Apple",
 }
 
+// Login component
 const login = () => {
+    // Using router hook for navigation
   const router = useRouter()
+    // Using OAuth hook for different strategies
   const { startOAuthFlow: googleAuth } = useOAuth({ strategy: "oauth_google" });
   const { startOAuthFlow: facebookAuth } = useOAuth({
     strategy: "oauth_facebook",
   });
   const { startOAuthFlow: appleAuth } = useOAuth({ strategy: "oauth_apple" });
 
+    // Function to handle authentication based on selected strategy
   const onSelectAuth = async (strategy: Strategy) => {
+
+    // Object to store different strategies
     const selectedAuth = {
       [Strategy.Google]: googleAuth,
       [Strategy.Facebook]: facebookAuth,
@@ -36,18 +43,22 @@ const login = () => {
     }[strategy];
 
     try {
+
+      // Starting OAuth flow and getting session ID and setActive function
       const { createdSessionId, setActive } = await selectedAuth();
       console.log( 'it works ',createdSessionId) 
 
+      // If session ID is created, set the session as active and navigate back
       if(createdSessionId){
         setActive!({ session: createdSessionId });
         router.back()
       }
     } catch (error) {
+     // Log any errors during the process
       console.log('OAutherror:',error);
     }
   };
-
+// Render login form and buttons for different OAuth strategies
   return (
     <View style={styles.container}>
       <TextInput
@@ -124,6 +135,7 @@ const login = () => {
   );
 };
 
+// Styles for the component
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -157,4 +169,5 @@ const styles = StyleSheet.create({
     fontFamily: "SpaceMono",
   },
 });
+// Exporting the component
 export default login;
