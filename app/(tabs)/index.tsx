@@ -1,21 +1,21 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import { Link, Tabs } from 'expo-router'
+import { Link, Stack } from 'expo-router'
+import Exploreheader from '@/components/Exploreheader'
+import Listings from '@/components/Listings'
 
-const Layout = () => {
+const page = () => {
   return (
-    <View>
-      <Link href={'/(modals)/booking'} >
-        Booking 
-      </Link>
-      <Link href={'/(modals)/login'} >
-        Login 
-      </Link>
-      <Link href={'/listings/1395'} >
-        Listings 
-      </Link>
+    <View style={{flex:1}}>
+      <Stack.Screen
+      options={
+        {
+            header:() => <Exploreheader/>,
+        }
+      }/>
+      <Listings />
     </View>
   )
 }
 
-export default Layout
+export default page
