@@ -4,7 +4,7 @@ import React from 'react'
 const Listings = () => {
   return (
     <View style={{}}>
-      <Text>Listings</Text>
+      
     </View>
   )
 }
