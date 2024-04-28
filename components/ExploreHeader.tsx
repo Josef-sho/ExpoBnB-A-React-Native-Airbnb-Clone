@@ -79,6 +79,11 @@ const styles = StyleSheet.create({
         },
         searchbtn:{
             flexDirection:'row' ,
+            alignItems:'center',
+            gap:10,
+            borderColor:'#c2c2c2',
+            borderWidth:StyleSheet.hairlineWidth
+
         }
 })
 

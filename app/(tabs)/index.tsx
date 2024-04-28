@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import { Link, Stack } from 'expo-router'
-import Exploreheader from '@/components/Exploreheader'
+import Exploreheader from '@/components/ExploreHeader'
 import Listings from '@/components/Listings'
 
 const page = () => {
