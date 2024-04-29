@@ -41,5 +41,6 @@ export const defaultStyles = StyleSheet.create({
     paddingHorizontal: 20,
     borderTopColor: Colors.grey,
     borderTopWidth: StyleSheet.hairlineWidth,
+   borderColor: '#D3D3D3'
   },
 });
