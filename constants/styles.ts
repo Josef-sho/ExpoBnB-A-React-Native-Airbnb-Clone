@@ -44,3 +44,4 @@ export const defaultStyles = StyleSheet.create({
    borderColor: '#D3D3D3'
   },
 });
+//change the styles of the button in the styles.ts file
