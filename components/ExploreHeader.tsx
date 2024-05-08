@@ -1,6 +1,6 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
 import React from 'react'
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
+import { Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link } from 'expo-router';
@@ -54,6 +54,14 @@ const Exploreheader = () => {
                     <Ionicons name='options-outline' size={24} />
                 </TouchableOpacity>
             </View>
+                <ScrollView horizontal>
+                    { categories.map((item, index) => (
+                        <TouchableOpacity>
+                            <MaterialIcons name={item.icon as any} size={24}/>
+                            <Text>{item.name}</Text>
+                        </TouchableOpacity>
+                    ))}
+                </ScrollView>
             </View>
         </SafeAreaView>
     )
@@ -70,6 +78,8 @@ const styles = StyleSheet.create({
             justifyContent:'space-between',
             paddingHorizontal:24,
             paddingBottom:16,
+            gap:10,
+
         },
         filterbtn:{
                 padding: 10,
@@ -82,7 +92,19 @@ const styles = StyleSheet.create({
             alignItems:'center',
             gap:10,
             borderColor:'#c2c2c2',
-            borderWidth:StyleSheet.hairlineWidth
+            borderWidth:StyleSheet.hairlineWidth,
+            flex:1,
+            padding:14,
+            borderRadius:30,
+            backgroundColor:'#fff',
+            elevation:2,
+            shadowColor:'#000',
+            shadowOpacity:0.12,
+            shadowRadius: 8,
+            shadowOffset: {
+                width:1,
+                height:1,
+            },
 
         }
 })
