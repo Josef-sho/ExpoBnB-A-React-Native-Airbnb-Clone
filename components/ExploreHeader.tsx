@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
-import React from 'react'
+import React, { useRef } from 'react'
 import { Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -21,7 +21,7 @@ const categories=[
     },
     {
         name: 'Play' ,
-        icon: 'Video-game-asset'
+        icon: 'sports-esports'
     },
     {
         name: 'city' ,
@@ -37,6 +37,8 @@ const categories=[
 ]
 
 const Exploreheader = () => {
+    const itemRef = useRef<Array<TouchableOpacity>>([])
+    const [activeIndex, setActiveIndex] = React.useState(0)
     return (
         <SafeAreaView style={{flex:1, backgroundColor:'#fff'}}> 
             <View style={styles.container}> 
@@ -54,9 +56,15 @@ const Exploreheader = () => {
                     <Ionicons name='options-outline' size={24} />
                 </TouchableOpacity>
             </View>
-                <ScrollView horizontal>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{
+                    alignItems:'center',
+                    gap:20,
+                    paddingHorizontal:16,
+                }}>
                     { categories.map((item, index) => (
-                        <TouchableOpacity>
+                        <TouchableOpacity key={index}
+                        ref={(el =>)}>
                             <MaterialIcons name={item.icon as any} size={24}/>
                             <Text>{item.name}</Text>
                         </TouchableOpacity>
@@ -106,6 +114,25 @@ const styles = StyleSheet.create({
                 height:1,
             },
 
+        },
+
+        categoryText:{
+            fontSize:14,
+            fontFamily:'mon',
+            color:Colors.grey,
+        },
+        categoryTextActive:{
+            fontSize:14,
+            fontFamily:'mon',
+            color:'#000',
+        
+        },
+
+        categoriesBtn:{
+            flex:1,
+            alignItems:'center',
+            justifyContent:'center',
+            paddingBottom:8,
         }
 })
 
