@@ -37,8 +37,15 @@ const categories=[
 ]
 
 const Exploreheader = () => {
-    const itemRef = useRef<Array<TouchableOpacity>>([])
-    const [activeIndex, setActiveIndex] = React.useState(0)
+    const itemRef = useRef<Array<TouchableOpacity|null>>([])
+    const [activeIndex, setActiveIndex] = React.useState(3)
+    
+    
+    seleaelac4'
+
+    const selectCategory = (index: number) => {
+        setActiveIndex(index);
+    }
     return (
         <SafeAreaView style={{flex:1, backgroundColor:'#fff'}}> 
             <View style={styles.container}> 
@@ -47,8 +54,8 @@ const Exploreheader = () => {
                     <TouchableOpacity style={styles.searchbtn}>
                         <Ionicons name='search' size={24}/>
                         <View>
-                            <Text style={{fontFamily:'mon-sb'}}>Where To?</Text>
-                            <Text style={{fontFamily:'mon', color:Colors.grey}}> Anywhere . Anyweek</Text>
+                            <Text style={{fontFamily:'SpaceMono'}}>Where To?</Text>
+                            <Text style={{fontFamily:'SpaceMono', color:Colors.grey}}> Anywhere . Anyweek</Text>
                         </View>
                     </TouchableOpacity>
                 </Link>
@@ -63,10 +70,13 @@ const Exploreheader = () => {
                     paddingHorizontal:16,
                 }}>
                     { categories.map((item, index) => (
-                        <TouchableOpacity key={index}
-                        ref={(el =>)}>
-                            <MaterialIcons name={item.icon as any} size={24}/>
-                            <Text>{item.name}</Text>
+                        <TouchableOpacity 
+                        onPress={() => selectCategory(index)}
+                        key={index}
+                        ref={(el) => itemRef.current[index] = el}
+                        style={activeIndex === index ? styles.categoriesBtnActive : styles.categoriesBtn}>
+                            <MaterialIcons name={item.icon as any} size={24} color={activeIndex === index ? Colors.dark: Colors.grey} />
+                            <Text style={activeIndex === index ? styles.categoryTextActive : styles.categoryText}>{item.name}</Text>
                         </TouchableOpacity>
                     ))}
                 </ScrollView>
@@ -118,13 +128,13 @@ const styles = StyleSheet.create({
 
         categoryText:{
             fontSize:14,
-            fontFamily:'mon',
+            fontFamily:'SpaceMono',
             color:Colors.grey,
         },
         categoryTextActive:{
             fontSize:14,
-            fontFamily:'mon',
-            color:'#000',
+            fontFamily:'SpaceMono',
+            color:Colors.dark,
         
         },
 
@@ -133,7 +143,16 @@ const styles = StyleSheet.create({
             alignItems:'center',
             justifyContent:'center',
             paddingBottom:8,
+        },
+        categoriesBtnActive:{
+            flex:1,
+            alignItems:'center',
+            justifyContent:'center',
+            paddingBottom:8,
+            borderBottomColor:'#000',
+            borderBottomWidth:2,
         }
 })
+
 
 export default Exploreheader
