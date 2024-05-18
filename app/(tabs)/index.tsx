@@ -5,12 +5,15 @@ import Exploreheader from '@/components/ExploreHeader'
 import Listings from '@/components/Listings'
 
 const page = () => {
+  const onDataChanged = (category: string) => {
+    console.log('Changed_data', category)
+  }
   return (
     <View style={{flex:1}}>
       <Stack.Screen
       options={
         {
-            header:() => <Exploreheader/>,
+            header:() => <Exploreheader onCategoryChanged={onDataChanged}/>,
         }
       }/>
       <Listings />
