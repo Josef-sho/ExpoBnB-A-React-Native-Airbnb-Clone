@@ -17,6 +17,7 @@ const page = () => {
         }
       }/>
       <Listings />
+      
     </View>
   )
 }
